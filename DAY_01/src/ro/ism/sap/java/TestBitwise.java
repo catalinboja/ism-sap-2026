@@ -112,6 +112,157 @@ public class TestBitwise {
 		}
 		
 		
+		//bit level shifting << >> >>>
+		byte anotherkey = 0b00110111;
+		System.out.println(
+				Integer.toBinaryString(anotherkey));
+		byte changedkey = (byte) (anotherkey << 1);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+		
+		
+		// always apply the 0xFF mask after a byte shift
+		changedkey = (byte) (anotherkey << 2);
+		System.out.println(
+				Integer.toBinaryString(0xFF & changedkey));
+		
+		changedkey = (byte) (anotherkey << 2);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+	
+		
+		//shift to right
+		changedkey = (byte) (anotherkey >> 1);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+		changedkey = (byte) (anotherkey >> 4);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+		
+		anotherkey = (byte) 0b10110111;
+		System.out.println("Initial key");
+		System.out.println(
+				Integer.toBinaryString(0xFF & anotherkey));
+	
+		changedkey = (byte) ((0xFF & anotherkey) >> 4);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+		
+		// >>> shift without preserving sign bit
+		// use the 0xFF to cancel Java extension to Integer
+		changedkey = (byte) ((0xFF & anotherkey) >>> 4);
+		System.out.println(
+				Integer.toBinaryString(changedkey));
+		
+		//how to check a bit value
+		byte bitValue = (byte) 0b10110111;
+		//check bit 6 value
+		byte bitMask = (byte) 0b01000000;
+		byte bitResult = (byte) (bitValue & bitMask);
+		byte bit6Value = 0;
+		if(bitResult == 0) {
+			System.out.println("Bit 6 is 0");
+		} else {
+			System.out.println("Bit 6 is 1");
+			bit6Value = 1;
+		}
+		
+		//add the bit value into another byte on any position
+		byte outputResult = 0x00;
+		//add the previous bit on bit 2
+		outputResult = (byte) (outputResult | (bit6Value << 2));
+		
+		//alternative
+		//get bit 6 value
+		bitValue = (byte) 0b11110111;
+		bit6Value = (byte) ((0xFF & (bitValue << 1)) >>> 7);
+		System.out.println(Integer.toBinaryString(bit6Value));
+		
+		//alternative
+		//get bit 6 value
+		bitValue = (byte) 0b11110111;
+		bit6Value = (byte) (bitValue >>> 6);
+		bit6Value = (byte) (bit6Value & 1);
+		
+		bit6Value = (byte) ((byte) (bitValue >>> 6) & 1);
+		System.out.println(Integer.toBinaryString(bit6Value));
+		
+		//rotate - works only for integers - 32 bits
+		//DON'T USE
+		bitValue = (byte) 0b10110111;
+		byte rotatedValue = 
+				(byte) Integer.rotateLeft(bitValue, 3);
+		System.out.println(Integer.toBinaryString(0xFF & rotatedValue));
+		
+		//flip bits
+		bitValue = (byte) 0b00110111;
+		byte flippedValue = (byte) ~bitValue;
+		
+		System.out.println("After flip");
+		System.out.println(Integer.toBinaryString(0xFF & flippedValue));
+		
+		//flip bit 2
+		bitValue = (byte) 0b10110011;
+		flippedValue = (byte) (bitValue ^ (1 << 2));
+		System.out.println(
+				Integer.toBinaryString(0xFF & flippedValue));
+		
+		
+		//flip bit 2 bit 3 and bit 6
+		bitValue = (byte) 0b10110011;
+		flippedValue =
+				(byte) (bitValue ^ (1 << 2 | 1 << 3 | 1 << 6));
+		System.out.println(
+				Integer.toBinaryString(0xFF & flippedValue));
+		
+		
+		//testing the LFSR
+		byte[] seed = {(byte) 0xF0, 0x1A, 0x05, 0x15};
+		LFSR lfsr = new LFSR();
+		lfsr.init(seed);
+		
+		byte random = lfsr.cycle();
+		System.out.println(random);
+		
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		
+		for(int i= 0 ;i < 32; i++) {
+			random = lfsr.cycle();
+		}
+		
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		random = lfsr.cycle();
+		System.out.println(random);
+		
+		
 	}
 
 }
