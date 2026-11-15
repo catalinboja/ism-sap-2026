@@ -35,7 +35,8 @@ public class TestMessageDigest {
 		return md.digest();
 	}
 	
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+	public static void main(String[] args) 
+			throws NoSuchAlgorithmException, IOException {
 		String password = "12345678";
 		byte[] passHash = getHash(password);
 		System.out.println(
