@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -119,6 +120,18 @@ public class TestFiles {
 		
 		System.out.println(stringValue);
 		
+		RandomAccessFile raf = 
+				new RandomAccessFile("values.bin", "rw");
+		byte[] values = {0x2f, 0x05, 0x44, 0x34};
+		raf.write(values);
+		raf.close();
+		
+		raf = new RandomAccessFile("values.bin", "r");
+		//read 3rd byte
+		raf.seek(2);
+		byte value = raf.readByte();
+		raf.close();
+		System.out.println("Value is: " + value);
 		
 	}
 
