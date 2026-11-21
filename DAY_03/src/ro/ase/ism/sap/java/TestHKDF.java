@@ -51,6 +51,10 @@ public class TestHKDF {
 			int requiredSize = sizeInBytes - position;
 			requiredSize = requiredSize > 32 ? 32 : requiredSize;
 			
+			//sau
+			//int requiredSize = 
+			//	Math.min(32, sizeInBytes - position);
+			
 			System.arraycopy(currentBlock, 0, generatedKey, position, requiredSize);
 			position += requiredSize;
 			previous = currentBlock;
