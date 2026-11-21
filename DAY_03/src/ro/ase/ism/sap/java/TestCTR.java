@@ -47,8 +47,15 @@ public class TestCTR {
 				Cipher.getInstance(
 						algorithm + "/CTR/NoPadding");
 		
-		//we use a all 0 IV
+		// for CTR don't reuse the IV
+		// use a random value and put it inside the file
+		
 		byte[] IV = new byte[cipher.getBlockSize()];
+		new SecureRandom().nextBytes(IV);
+		
+		//we put it in the file
+		fos.write(IV);
+
 		
 		cipher.init(
 				Cipher.ENCRYPT_MODE, 
@@ -92,8 +99,10 @@ public class TestCTR {
 		
 		Cipher cipher = Cipher.getInstance(
 				algorithm + "/CTR/NoPadding");
-		
+			
+		//get the IV from the file - 1st block
 		byte[] IV = new byte[cipher.getBlockSize()];
+		fis.read(IV);
 		
 		cipher.init(Cipher.DECRYPT_MODE, 
 				new SecretKeySpec(key, algorithm),
@@ -115,8 +124,8 @@ public class TestCTR {
 
 	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, IOException {
 		String key = "password";
-//		encrypt(key.getBytes(), "DES", 
-//				"message.txt", "message.ctr");
+		encrypt(key.getBytes(), "DES", 
+				"message.txt", "message.ctr");
 		decrypt(key.getBytes(), "DES", 
 				"message.ctr", "message5.txt");
 		

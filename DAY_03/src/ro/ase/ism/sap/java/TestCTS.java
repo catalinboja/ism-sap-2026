@@ -47,15 +47,9 @@ public class TestCTS {
 				Cipher.getInstance(
 						algorithm + "/CTS/NoPadding");
 		
-		//we decided to generate a random IV and store it
-		// in the output file
+		//we decided to use a all 0 byte IV
 		byte[] IV = new byte[cipher.getBlockSize()];
-		new SecureRandom().nextBytes(IV);
-		
-		//we put it in the file
-		fos.write(IV);
-		
-		
+			
 		cipher.init(
 				Cipher.ENCRYPT_MODE, 
 				new SecretKeySpec(key, algorithm),
@@ -99,9 +93,8 @@ public class TestCTS {
 		Cipher cipher = Cipher.getInstance(
 				algorithm + "/CTS/NoPadding");
 		
-		//get the IV from the file - 1st block
+		//IV is known - all 0
 		byte[] IV = new byte[cipher.getBlockSize()];
-		fis.read(IV);
 		
 		cipher.init(Cipher.DECRYPT_MODE, 
 				new SecretKeySpec(key, algorithm),
